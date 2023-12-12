@@ -134,7 +134,7 @@ class GUInuitka(QMainWindow):
         command += f'{self.file_path_line_edit.text()} '
 
         # 添加 --jobs 参数以加快编译过程
-        command += '--jobs=99999999999'
+        command += '--jobs=9999'
         return command
 
     def run_command(self):
