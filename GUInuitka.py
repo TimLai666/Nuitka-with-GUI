@@ -3,6 +3,7 @@ import asyncio
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QPushButton, QFileDialog, QProgressBar, QPlainTextEdit, QComboBox, QLineEdit, QStyle, QWidget
 from PyQt5.QtGui import QIcon, QPalette, QColor, QFont
 from PyQt5.QtCore import QProcess, Qt
+import os
 
 
 class GUInuitka(QMainWindow):
@@ -134,7 +135,7 @@ class GUInuitka(QMainWindow):
         command += f'{self.file_path_line_edit.text()} '
 
         # 添加 --jobs 参数以加快编译过程
-        command += '--jobs=9999'
+        command += '--jobs='+str(os.cpu_count())
         return command
 
     def run_command(self):
