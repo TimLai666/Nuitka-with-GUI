@@ -112,7 +112,7 @@ class GUInuitka(QMainWindow):
 
     def build_command(self):
         command = 'python -m nuitka '
-
+        command += '--enable-plugin=pyqt5 '
         # 根据用户选择决定打包方式（单一文件还是目录）
         if self.package_mode_combo_box.currentText() == 'One Directory':
             command += '--follow-imports '
@@ -134,7 +134,7 @@ class GUInuitka(QMainWindow):
         command += f'{self.file_path_line_edit.text()} '
 
         # 添加 --jobs 参数以加快编译过程
-        command += '--jobs=999'
+        command += '--jobs=99999999999'
         return command
 
     def run_command(self):
