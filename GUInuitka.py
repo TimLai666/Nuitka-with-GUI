@@ -140,17 +140,20 @@ class GUInuitka(QMainWindow):
     def run_command(self):
         self.process = QProcess()
 
-        # Connect the signal emitted during process execution.
+        # 连接信号
         self.process.readyReadStandardOutput.connect(self.handle_stdout)
         self.process.readyReadStandardError.connect(self.handle_stderr)
-        self.process.finished.connect(self.process_finished)  # new line
+        self.process.finished.connect(self.process_finished)
 
-        self.build_button.setEnabled(False)  # Disable the button to avoid multiple runs.
-        self.progress_bar.setRange(0, 0)  # Set the progress bar to 'busy' mode.
-        self.progress_text_edit.setPlainText("執行中...")  # Display 'Running...' in the progress text box.
+        self.build_button.setEnabled(False)
+        self.progress_bar.setRange(0, 0)
+        self.progress_text_edit.setPlainText("執行中...")
 
         command = self.build_command()
         self.process.start(command)
+
+        # 在这里写入 'Yes' 并按回车，以响应可能出现的提示
+        self.process.write(b"Yes\n")
 
     def handle_stdout(self):
         data = self.process.readAllStandardOutput().data()
