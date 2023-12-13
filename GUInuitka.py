@@ -126,7 +126,7 @@ class GUInuitka(QMainWindow):
 
         # 如果用户指定了 icon，添加到命令中
         if self.icon_path_line_edit.text():
-            command += f'--include-icon={self.icon_path_line_edit.text()} '
+            command += f'--windows-icon-from-ico={self.icon_path_line_edit.text()} '
 
         # 指定输出路径
         command += f'--output-dir={self.output_path_line_edit.text()} '
