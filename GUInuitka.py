@@ -5,6 +5,7 @@ from PyQt5.QtGui import QIcon, QPalette, QColor, QFont
 from PyQt5.QtCore import QProcess, Qt
 import os
 
+cpu = os.cpu_count()
 
 class GUInuitka(QMainWindow):
     def __init__(self):
@@ -68,6 +69,15 @@ class GUInuitka(QMainWindow):
         self.interface_mode_combo_box.move(150, 270)
         self.interface_mode_combo_box.addItem('Console Based')
         self.interface_mode_combo_box.addItem('Window Based')
+
+        self.cpu_mode_label = QLabel('CPU核心數：', self)
+        self.cpu_mode_label.move(20, 310)
+        self.cpu_mode_combo_box = QComboBox(self)
+        self.cpu_mode_combo_box.move(150, 310)
+        self.cpu_mode_combo_box.addItem(str(cpu))
+        self.cpu_mode_combo_box.addItem(str(int(cpu*3/4)))
+        self.cpu_mode_combo_box.addItem(str(int(cpu/2)))
+        self.cpu_mode_combo_box.addItem(str(int(cpu/4)))
 
         self.progress_text_edit = QPlainTextEdit(self)
         self.progress_text_edit.move(400, 60)
@@ -135,7 +145,7 @@ class GUInuitka(QMainWindow):
         command += f'{self.file_path_line_edit.text()} '
 
         # 添加 --jobs 参数以加快编译过程
-        command += '--jobs='+str(os.cpu_count())
+        command += '--jobs='+str(self.cpu_mode_combo_box.currentText())
         return command
 
     def run_command(self):
@@ -147,6 +157,16 @@ class GUInuitka(QMainWindow):
         self.process.finished.connect(self.process_finished)
 
         self.build_button.setEnabled(False)
+        self.file_path_line_edit.setEnabled(False)
+        self.file_path_button.setEnabled(False)
+        self.output_path_line_edit.setEnabled(False)
+        self.output_path_button.setEnabled(False)
+        self.icon_path_line_edit.setEnabled(False)
+        self.icon_path_button.setEnabled(False)
+        self.package_mode_combo_box.setEnabled(False)
+        self.interface_mode_combo_box.setEnabled(False)
+        self.cpu_mode_combo_box.setEnabled(False)
+
         self.progress_bar.setRange(0, 0)
         self.progress_text_edit.setPlainText("執行中...")
 
@@ -177,6 +197,15 @@ class GUInuitka(QMainWindow):
         self.progress_text_edit.appendPlainText('finish')
         self.progress_bar.setRange(0, 1)  # Reset the progress bar.
         self.build_button.setEnabled(True)  # Enable the button after the process finish.
+        self.file_path_line_edit.setEnabled(True)
+        self.file_path_button.setEnabled(True)
+        self.output_path_line_edit.setEnabled(True)
+        self.output_path_button.setEnabled(True)
+        self.icon_path_line_edit.setEnabled(True)
+        self.icon_path_button.setEnabled(True)
+        self.package_mode_combo_box.setEnabled(True)
+        self.interface_mode_combo_box.setEnabled(True)
+        self.cpu_mode_combo_box.setEnabled(True)
 
 
 if __name__ == '__main__':
